@@ -8,10 +8,12 @@ using namespace std;
 
 class Solution {
   public:
+    long long func(long long i,long long N){
+        if(i>N) return 0;
+        return i*i*i+func(i+1,N);
+    }
     long long sumOfSeries(long long N) {
-        if(N<1) return 0;
-        
-        return N*N*N+sumOfSeries(N-1);
+        return func(1,N);
     }
 };
 
