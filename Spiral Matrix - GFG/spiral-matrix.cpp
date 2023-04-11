@@ -13,24 +13,24 @@ class Solution{
             for(int j=s;j<=c;j++){
                 k--;
                 if(k==0) {
-                    return a[t][j];
+                    return a[s][j];
                 }
             }
             
             for(int i=s+1;i<=r;i++){
                 k--;
-                if(k==0) return a[i][m-1-t];
+                if(k==0) return a[i][c];
             }
             
             for(int j=c-1;j>=s;j--){
                 k--;
                 if(k==0) {
-                    return a[n-1-t][j];
+                    return a[r][j];
                 }
             }
             for(int i=r-1;i>s;i--){
                 k--;
-                if(k==0) return a[i][t];
+                if(k==0) return a[i][s];
             }
             s++,c--,r--,t++;
         }
