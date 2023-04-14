@@ -3,15 +3,16 @@ public:
     int longestConsecutive(vector<int>& a) {
         int n=a.size();
         if(n==0) return 0;
-        sort(a.begin(),a.end());
-        int cnt=1,maxi=1;
-        for(int i=1;i<n;i++){
-            if((a[i]-a[i-1])==1) cnt++;
-            else if((a[i]-a[i-1])==0);
+        set<int> st(a.begin(),a.end());
+         
+        long long last=INT_MIN+100,cnt=1,maxi=1;
+        for(auto x:st){
+            if(x-last==1) cnt++;
             else{
-                maxi=max(cnt,maxi);
+                maxi=max(maxi,cnt);
                 cnt=1;
             }
+            last=x;
         }
         maxi=max(cnt,maxi);
         return maxi;
