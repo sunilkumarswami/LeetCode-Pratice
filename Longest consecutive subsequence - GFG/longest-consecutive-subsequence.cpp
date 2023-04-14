@@ -12,15 +12,15 @@ class Solution{
     //Function to return length of longest subsequence of consecutive integers.
     int findLongestConseqSubseq(int a[], int n)
     {
-        sort(a,a+n);
-        int cnt=1,maxi=1;
-        for(int i=1;i<n;i++){
-            if((a[i]-a[i-1])==1) cnt++;
-            else if((a[i]-a[i-1])==0);
+        set<int> st(a,a+n);
+        int cnt=1,maxi=1,last=-10;
+        for(auto x:st){
+            if(x-last==1) cnt++;
             else{
-                maxi=max(cnt,maxi);
+                maxi=max(maxi,cnt);
                 cnt=1;
             }
+            last=x;
         }
         maxi=max(cnt,maxi);
         return maxi;
