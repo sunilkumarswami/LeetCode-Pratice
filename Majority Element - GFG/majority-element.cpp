@@ -17,13 +17,14 @@ class Solution{
     {
         
         // your code here
-        sort(a,a+n);
-        int i;
-        for( i=0;i<=n/2;i++){
-            if((i+n/2)<n && a[i]==a[i+n/2]) 
-                return a[i];
+        unordered_map<int,int> mp;
+        for(int i=0;i<n;i++){
+            mp[a[i]]++;
         }
-        if(i==((n/2)+1)) return -1;
+        for(auto x:mp){
+            if(x.second>n/2) return x.first;
+        }
+        return -1;
     }
 };
 
