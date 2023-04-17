@@ -16,7 +16,7 @@ class Solution{
         vector<int> v;
         int maxi=INT_MIN;
         for(int i=n-1;i>=0;i--){
-            if(maxi<=a[i]){
+            if(a[i]>=maxi){
                 maxi=a[i];
                 v.push_back(maxi);
             }
