@@ -14,11 +14,11 @@ public:
             return ans;
         }
         for(int i=3;i<=n;i++){
-            vector<int> v,a;
+            vector<int> v;
             v.push_back(1);
-            a=ans.back();
-            for(int j=0;j<a.size()-1;j++){
-                v.push_back((a[j]+a[j+1]));
+            
+            for(int j=0;j<ans.back().size()-1;j++){
+                v.push_back((ans.back()[j]+ans.back()[j+1]));
             }
             v.push_back(1);
             ans.push_back(v);
