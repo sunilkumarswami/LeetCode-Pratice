@@ -10,25 +10,25 @@ using namespace std;
 class Solution{
 public:
     vector<int> nextPermutation(int n, vector<int> a){
-        int i1=-1,i2;
-        for(int i=n-2;i>=0;i--){
-            if(a[i]<a[i+1]){
-                i1=i;
+        int ind1=-1,ind2;
+        for(int i=n-1;i>0;i--){
+            if(a[i-1]<a[i]){
+                ind1=i-1;
                 break;
             }
         }
-        if(i1==-1){
+        if(ind1==-1){
             reverse(a.begin(),a.end());
             return a;
         }
         for(int i=n-1;i>=0;i--){
-            if(a[i1]<a[i]){
-                i2=i;
+            if(a[i]>a[ind1]){
+                ind2=i;
                 break;
             }
         }
-        swap(a[i1],a[i2]);
-        reverse(a.begin()+i1+1,a.end());
+        swap(a[ind1],a[ind2]);
+        reverse(a.begin()+ind1+1,a.end());
         return a;
     }
 };
