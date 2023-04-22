@@ -16,24 +16,15 @@ public:
                     // sort(v.begin(),v.end());
                     ans.push_back(v);
                     num2=a[j],num3=a[k];
+                    while(j+1<n && a[j+1]==a[j]) j++;
+                    while(k-1>=0 && a[k-1]==a[k]) k--;
                     j++,k--;
-                    while(j<n && num2==a[j]) j++;
-                    while(k>=0 && num3==a[k]) k--;
                 }
-                else if((a[j]+a[k])>sum){
-                    num3=a[k];
-                    k--;
-                    while(k>=0 && num3==a[k]) k--;
-                }
-                else{
-                    num2=a[j];
-                    j++;
-                    while(j<n && num2==a[j]) j++;
-                }
+                else if((a[j]+a[k])>sum) k--;
+                else j++;
             }
-            num1=a[i];
+            while(i+1<n && a[i+1]==a[i]) i++;
             i++;
-            while(i<n && num1==a[i]) i++;
         }
         return ans;
     }
