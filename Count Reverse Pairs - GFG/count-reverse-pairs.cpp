@@ -12,16 +12,7 @@ class Solution {
   public:
   
     void conqure(long long low,long long mid,long long high,vector<int> &a,long long n,long long &cnt){
-        int i=low,j=mid+1;
-        for(;j<=high;j++){
-            while(i<=mid && a[i]<=(long long)2*a[j]){
-                i++;
-                
-            }
-            cnt+=mid+1-i;
-        }
-         i=low,j=mid+1;
-        long long k=0;
+        int i=low,j=mid+1,l=low,k=0;
         long long b[high-low+2];
         while(i<=mid && j<=high){
             if(a[i]<=a[j]){
@@ -29,9 +20,9 @@ class Solution {
                 b[k++]=a[i++];
             }
             else{
-                // while(l<=mid && a[l]<=2*a[j])
-                // l++;
-                // cnt+=mid+1-l;
+                while(l<=mid && a[l]<=2*a[j])
+                l++;
+                cnt+=mid+1-l;
                 b[k++]=a[j++];
             }
         }
