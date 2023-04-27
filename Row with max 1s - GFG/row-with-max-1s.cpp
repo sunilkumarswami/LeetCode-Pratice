@@ -8,24 +8,15 @@ class Solution{
 public:
 	int rowWithMax1s(vector<vector<int> > a, int n, int m) {
 	    // code here
-	    int ans=-1,mini=INT_MAX;
-	    for(int i=0;i<n;i++){
-	        int l=0,h=m-1;
-	        int val=INT_MAX;
-	        while(l<=h){
-	            int mid=(l+h)/2;
-	            if(a[i][mid]==1){
-	                val=mid;
-	                h=mid-1;
-	            }
-	            else{
-	                l=mid+1;
-	            }
-	            if(val<mini){
-	                mini=val;
-	                ans=i;
-	            }
+	    int ans=-1;
+	    int i=0,j=m-1;
+	    while(i<n && j>=0){
+	        if(a[i][j]==1){
+	            ans=i;
+	            j--;
 	        }
+	        else
+	            i++;
 	    }
 	    return ans;
 	}
