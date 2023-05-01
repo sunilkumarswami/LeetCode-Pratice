@@ -10,17 +10,11 @@ class Solution{
     {
         if(m<n)
         return kthElement(b,a,m,n,k);
-        int l=0,h=n;
+        int l=max(0,k-m),h=min(n,k);
         while(l<=h){
             int cut1=(l+h)/2;
             int cut2=k-cut1;
-            if(cut1>k){
-                h=cut1-1;
-            }
-            else if(cut2>m){
-                l=cut1+1;
-            }
-            else{
+            
                 int l1=INT_MIN,l2=INT_MIN,m1=INT_MAX,m2=INT_MAX;
                 if(cut1-1>=0 && cut1-1<n) l1=a[cut1-1];
                 if(cut1>=0 && cut1<n) m1=a[cut1];
@@ -29,7 +23,7 @@ class Solution{
                 if(l1<=m2 && l2<=m1) return max(l1,l2);
                 else if(l1>m2) h=cut1-1;
                 else l=cut1+1;
-            }
+            
         }
         return -1;
     }
