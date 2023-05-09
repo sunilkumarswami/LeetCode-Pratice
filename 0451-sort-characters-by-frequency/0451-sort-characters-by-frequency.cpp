@@ -3,15 +3,16 @@ public:
     string frequencySort(string s) {
         string ans;
         unordered_map<char,int> mp;
-        vector<pair<int,char>> v;
+        priority_queue<pair<int,char>> pq;
         for(auto x:s) mp[x]++;
         for(auto x:mp){
-            v.push_back({x.second,x.first});
+            pq.push({x.second,x.first});
         }
-        sort(v.begin(),v.end());
-        for(int i=v.size()-1;i>=0;i--){
-            int m=v[i].first;
-            while(m--) ans+=v[i].second;
+        
+        while(!pq.empty()){
+            auto x=pq.top();
+            ans.append(x.first,x.second);
+            pq.pop();
         }
         return ans;
     }
