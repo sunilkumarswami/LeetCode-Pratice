@@ -10,14 +10,13 @@
  */
 class Solution {
 public:
+    struct ListNode* solve(struct ListNode *cur,struct ListNode *last){
+        if(cur==NULL) return last;
+        ListNode *nxt=cur->next;
+        cur->next=last;
+        return solve(nxt,cur);
+    }
     ListNode* reverseList(ListNode* head) {
-        ListNode *cur=head,*last=NULL,*nxt;
-        while(cur!=NULL){
-            nxt=cur->next;
-            cur->next=last;
-            last=cur;
-            cur=nxt;
-        }
-        return last;
+        return solve(head,NULL);
     }
 };
