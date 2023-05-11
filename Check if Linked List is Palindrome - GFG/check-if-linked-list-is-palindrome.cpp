@@ -35,15 +35,29 @@ class Solution{
     bool isPalindrome(Node *head)
     {
         //Your code here
-        vector<int> v;
-        Node *p=head;
-        while(p!=NULL){
-           v.push_back(p->data);
-           p=p->next;
+        if(head==NULL || head->next==NULL) return true;
+        Node *slow=head,*fast=head;
+        int cnt=0;
+        while(fast!=NULL && fast->next!=NULL){
+            slow=slow->next;
+            fast=fast->next->next;
+            cnt++;
         }
-        int n=v.size();
-        for(int i=0;i<n/2;i++){
-            if(v[i]!=v[n-1-i]) return false;
+        
+        Node* last=slow,*cur=slow->next;
+        while(cur!=NULL){
+            Node* nxt=cur->next;
+            cur->next=last;
+            last=cur;
+            cur=nxt;
+        }
+        
+        Node *st=head,*end=last;
+        while(cnt>0){
+            if(st->data!=end->data) return false;
+            st=st->next;
+            end=end->next;
+            cnt--;
         }
         return true;
     }
