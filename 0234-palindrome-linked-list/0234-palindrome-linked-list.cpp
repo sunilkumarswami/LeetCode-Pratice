@@ -24,26 +24,20 @@ public:
         if(head==NULL || head->next==NULL) return true;
         ListNode *slow=head,*fast=head,*temp=head;
         int cnt=0;
-        while(fast!=NULL && fast->next!=NULL){
+        while(fast->next!=NULL && fast->next->next!=NULL){
             temp=slow;
             slow=slow->next;
             fast=fast->next->next;
             // cnt++;
         }
-        ListNode *p=head;
-        while(p!=NULL){
-            p=p->next;
-            cnt++;
-        }
-        cnt/=2;
-        temp->next=reverse(NULL,slow);
+        slow->next=reverse(NULL,slow->next);
         
-        fast=head,slow=temp->next;
-        while(cnt>0){
+        fast=head,slow=slow->next;
+        while(slow!=NULL){
             if(fast->val!=slow->val) return false;
             fast=fast->next;
             slow=slow->next;
-            cnt--;
+           
         }
         return true;  
     }
