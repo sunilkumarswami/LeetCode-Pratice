@@ -78,23 +78,48 @@ struct Node
 };
 */
 // your task is to complete this function
+Node* merge(Node* h1,Node* h2){
+        Node* start=new Node(0);
+        Node *p=start;
+        while(h1 && h2){
+            if(h1->data<=h2->data){
+                p->next=new Node(h1->data);
+                h1=h1->next;
+                p=p->next;
+            }
+            else{
+                p->next=new Node(h2->data);
+                h2=h2->next;
+                p=p->next;
+            }
+        }
+        while(h1){
+            p->next=new Node(h1->data);
+            h1=h1->next;
+                p=p->next;
+        }
+        while(h2!=NULL){
+            p->next=new Node(h2->data);
+            h2=h2->next;
+                p=p->next;
+        }
+        return start->next;
+    }
+    Node* divide(Node* head){
+        if(!head || !head->next) return head;
+        Node* slow=head,*fast=head;
+        while(fast->next && fast->next->next){
+            slow=slow->next;
+            fast=fast->next->next;
+        }
+        Node *head2=slow->next;
+        slow->next=NULL;
+        head=divide(head);
+        head2=divide(head2);
+        return merge(head,head2);
+    }
 void sort(Node **head)
 {
-     // Code here
-     
-     while(1){
-         bool flag=true;
-         Node *cur=*head;
-         while(cur->next!=NULL){
-             Node *nxt=cur->next;
-             if(cur->data>nxt->data){
-                 int temp=cur->data;
-                 cur->data=nxt->data;
-                 nxt->data=temp;
-                 flag=false;
-             }
-             cur=nxt;
-         }
-         if(flag) break;
-     }
+
+      *head=divide(*head);
 }
