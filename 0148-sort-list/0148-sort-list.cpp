@@ -11,42 +11,46 @@
 class Solution {
 public:
     ListNode* merge(ListNode* h1,ListNode* h2){
-        ListNode start(0);
-        ListNode *p=&start;
-        while(h1!=NULL && h2!=NULL){
+        ListNode* start=new ListNode();
+        ListNode *p=start;
+        while(h1 && h2){
             if(h1->val<=h2->val){
-                p->next=h1;
+                p->next=new ListNode(h1->val);
                 h1=h1->next;
+                p=p->next;
             }
             else{
-                p->next=h2;
+                p->next=new ListNode(h2->val);
                 h2=h2->next;
+                p=p->next;
             }
-            p=p->next;
         }
-        if(h1!=NULL){
-            p->next=h1;
+        while(h1){
+            p->next=new ListNode(h1->val);
             h1=h1->next;
+                p=p->next;
         }
-        if(h2!=NULL){
-            p->next=h2;
+        while(h2!=NULL){
+            p->next=new ListNode(h2->val);
             h2=h2->next;
+                p=p->next;
         }
-        return start.next;
+        return start->next;
     }
-    
-    ListNode* sortList(ListNode* head) {
+    ListNode* divide(ListNode* head){
         if(!head || !head->next) return head;
-        ListNode* slow=head,*fast=head,*temp=head;
-        while(fast!=NULL && fast->next!=NULL){
-            temp=slow;
+        ListNode* slow=head,*fast=head;
+        while(fast->next && fast->next->next){
             slow=slow->next;
             fast=fast->next->next;
         }
-        // ListNode *mid=slow->next;
-        temp->next=NULL;
-        ListNode *left=sortList(head);
-        ListNode* right=sortList(slow);
-        return merge(left,right);
+        ListNode *head2=slow->next;
+        slow->next=NULL;
+        head=divide(head);
+        head2=divide(head2);
+        return merge(head,head2);
+    }
+    ListNode* sortList(ListNode* head) {
+        return divide(head);
     }
 };
