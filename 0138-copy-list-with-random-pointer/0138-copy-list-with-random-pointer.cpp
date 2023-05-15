@@ -24,17 +24,17 @@ public:
         Node *p=head,*q=newHead;
         while(p->next){
             q->next=new Node(p->next->val);
-            mp[p]=q;
+            // mp[p]=q;
             p=p->next;
             q=q->next;
             mp[p]=q;
         }
         p=head,q=newHead;
         while(p){
-            if(p->random==NULL) q->random=NULL;
-            else q->random=mp[p->random];
+            if(p->random==NULL) mp[p]->random=NULL;
+            else mp[p]->random=mp[p->random];
             p=p->next;
-            q=q->next;
+            // q=q->next;
         }
         return newHead;
     }
