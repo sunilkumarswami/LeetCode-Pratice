@@ -113,36 +113,25 @@ struct Node{
     the flattened linked list. */
 Node *flatten(Node *root)
 {
-    Node *p=root;
+    Node *cur=root,*p=root->next;
     while(p){
-        if(p->bottom){
-            Node *q=p->bottom;
-            p->bottom=NULL;
-            while(q){
-                Node *r=q->bottom;
-                q->bottom=NULL;
-                Node *cur=p;
-                while(cur->next  && cur->next->data<q->data){
-                    cur=cur->next;
-                }
-                Node *s=cur->next;
-                cur->next=q;
-                q->next=s;
-                q=r;
-            }
-        }
-        p=p->next;
-    }
-    Node *dummy=new Node(0);
-    Node *ans=dummy;
-    p=root;
-    while(p){
-        Node *q=p->next;
+        Node *nxt=p->next;
         p->next=NULL;
-        ans->bottom=p;
-        p=q;
-        ans=ans->bottom;
+        Node *q=p;
+        while(q){
+            Node *btm=q->bottom;
+            q->bottom=NULL;
+            cur=root;
+            while(cur->bottom && cur->bottom->data<q->data)
+            cur=cur->bottom;
+            
+            Node *r=cur->bottom;
+            cur->bottom=q;
+            q->bottom=r;
+            q=btm;
+        }
+        p=nxt;
     }
-    return dummy->bottom;
+    return root;
 }
 
