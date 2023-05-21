@@ -17,15 +17,19 @@ class Solution{
         sort(arr,arr+n);
         sort(dep,dep+n);
         queue<int> q;
-        for(int i=0;i<n;i++){
-            while(!q.empty() && q.front()<arr[i]) q.pop();
-            q.push(dep[i]);
-            int m=q.size();
-            ans=max(ans,m);
+        int i=0,j=0,plat=0,maxi=0;
+        while(i<n && j<n){
+            if(arr[i]<=dep[j]){
+                plat++;
+                maxi=max(maxi,plat);
+                i++;
+            }
+            else{
+                plat--;
+                j++;
+            }
         }
-        
-        
-        return ans;
+        return maxi;
     }
 };
 
