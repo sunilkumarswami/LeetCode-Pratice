@@ -32,19 +32,26 @@ struct Node {
 class Solution {
   public:
     // Function to return a list containing the inorder traversal of the tree.
-    void func(Node *node,vector<int> &ans){
-    if(node==NULL) return;
     
-    func(node->left,ans);
-    ans.push_back(node->data);
-    func(node->right,ans);
-}
-
     vector<int> inOrder(Node* root) {
         // Your code here
         vector<int> ans;
-    func(root,ans);
-    return ans;
+        stack<Node*> st;
+        Node* node=root;
+        while(true){
+            if(node){
+                st.push(node);
+                node=node->left;
+            }
+            else{
+                if(st.empty()) return ans;
+                node=st.top();
+                st.pop();
+                ans.push_back(node->data);
+                node=node->right;
+            }
+        }
+        return ans;
     }
 };
 
