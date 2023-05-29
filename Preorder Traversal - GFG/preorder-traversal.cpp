@@ -129,16 +129,21 @@ struct Node
 */
 
 //Function to return a list containing the preorder traversal of the tree.
-void func(Node *node,vector<int> &ans){
-    if(node==NULL) return;
-    ans.push_back(node->data);
-    func(node->left,ans);
-    func(node->right,ans);
-}
+
 vector <int> preorder(Node* root)
 {
   // Your code here
     vector<int> ans;
-    func(root,ans);
+    stack<Node*> st;
+    Node *node=root;
+    st.push(node);
+    while(!st.empty()){
+        ans.push_back(st.top()->data);
+        Node *node=st.top();
+        st.pop();
+        if(node->right) st.push(node->right);
+        if(node->left) st.push(node->left);
+    }
+    
     return ans;
 }
