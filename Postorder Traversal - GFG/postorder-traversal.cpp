@@ -124,18 +124,20 @@ struct Node
 }; */
 
 //Function to return a list containing the postorder traversal of the tree.
-void func(Node *node,vector<int> &ans){
-    if(node==NULL) return;
-    
-    func(node->left,ans);
-   
-    func(node->right,ans);
-     ans.push_back(node->data);
-}
+
 vector <int> postOrder(Node* root)
 {
   // Your code here
   vector<int> ans;
-    func(root,ans);
+    stack<Node*> st;
+    if(!root) return ans;
+    st.push(root);
+    while(!st.empty()){
+        Node *node=st.top();
+        st.pop();
+        ans.insert(ans.begin(),node->data);
+        if(node->left) st.push(node->left);
+        if(node->right) st.push(node->right);
+    }
     return ans;
 }
