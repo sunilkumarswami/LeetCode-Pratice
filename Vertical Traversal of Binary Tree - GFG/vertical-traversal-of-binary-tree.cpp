@@ -122,10 +122,10 @@ class Solution
         
         for(auto x: mp){
             vector<int> v=x.second;
-            
-            for(auto it:v){
-                ans.push_back(it);
-            }
+            ans.insert(ans.end(),x.second.begin(),x.second.end());
+            // for(auto it:v){
+            //     ans.push_back(it);
+            // }
         }
         return ans;
     }
