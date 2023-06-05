@@ -9,26 +9,21 @@
  */
 class Solution {
 public:
-    bool solve(TreeNode* node, TreeNode* p, TreeNode* q,TreeNode* &ans){
-        if(!node) return false;
-        bool left=solve(node->left,p,q,ans);
-        bool right=solve(node->right,p,q,ans);
-        if(node==p || node==q){
-            if(left || right){
-                ans=node;
-            }
-            return true;
-        }
+    TreeNode* solve(TreeNode* node, TreeNode* p, TreeNode* q){
+        if(!node || node==p || node==q) return node;
+        TreeNode* left=solve(node->left,p,q);
+        TreeNode* right=solve(node->right,p,q);
         if(left && right){
-                ans=node;
-                return true;
+            return node;
+        }
+        if(left ){
+                return left;
             }
-        if(left || right) return true;
-        return false;
+        if(right) return right;
+        return NULL;
     }
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        TreeNode* ans=NULL;
-        bool b= solve(root,p,q,ans);
-        return ans;
+        return solve(root,p,q);
+      
     }
 };
