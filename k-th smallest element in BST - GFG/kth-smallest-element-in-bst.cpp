@@ -95,17 +95,17 @@ class Solution {
   public:
     // Return the Kth smallest element in the given BST
     
-    void solve(Node *node,int &k,int &ans){
-        if(!node) return ;
-         solve(node->left,k,ans);
+    int solve(Node *node,int &k){
+        if(!node) return -1;
+        int left=solve(node->left,k);
+        if(left!=-1) return left;
         --k;
-        if(k==0)  ans=node->data;
-        solve(node->right,k,ans);
+        if(k==0)  return node->data;
+        return solve(node->right,k);
     }
     int KthSmallestElement(Node *root, int K) {
-        int ans=-1;
-      solve(root,K,ans);
-      return ans;
+      return solve(root,K);
+     
     }
 };
 
