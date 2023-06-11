@@ -6,9 +6,9 @@ using namespace std;
 //User function Template for C++
 
 class Queue {
-    stack<int> input, output;
+    stack<int> st1, st2;
 public:
-    stack<int> st1,st2;
+    
     void enqueue(int x) {
         while(!st1.empty()){
             st2.push(st1.top());
