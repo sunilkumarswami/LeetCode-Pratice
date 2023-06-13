@@ -36,19 +36,28 @@ class Solution {
     vector<int> inOrder(Node* root) {
         // Your code here
         vector<int> ans;
-        stack<Node*> st;
         Node* node=root;
-        while(true){
-            if(node){
-                st.push(node);
-                node=node->left;
-            }
-            else{
-                if(st.empty()) return ans;
-                node=st.top();
-                st.pop();
+        
+        while(node){
+            if(!node->left){
                 ans.push_back(node->data);
                 node=node->right;
+            }
+            else{
+                Node *cur=node->left;
+                while(cur->right && cur->right!=node){
+                    cur=cur->right;
+                }
+                
+                if(!cur->right){
+                    cur->right=node;
+                    node=node->left;
+                }
+                else{
+                    cur->right=NULL;
+                    ans.push_back(node->data);
+                    node=node->right;
+                }
             }
         }
         return ans;
