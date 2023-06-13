@@ -132,18 +132,30 @@ struct Node
 
 vector <int> preorder(Node* root)
 {
-  // Your code here
-    vector<int> ans;
-    stack<Node*> st;
-    Node *node=root;
-    st.push(node);
-    while(!st.empty()){
-        ans.push_back(st.top()->data);
-        Node *node=st.top();
-        st.pop();
-        if(node->right) st.push(node->right);
-        if(node->left) st.push(node->left);
-    }
-    
-    return ans;
+  vector<int> ans;
+        Node* node=root;
+        
+        while(node){
+            if(!node->left){
+                ans.push_back(node->data);
+                node=node->right;
+            }
+            else{
+                Node *cur=node->left;
+                while(cur->right && cur->right!=node){
+                    cur=cur->right;
+                }
+                
+                if(!cur->right){
+                    cur->right=node;
+                    ans.push_back(node->data);
+                    node=node->left;
+                }
+                else{
+                    cur->right=NULL;
+                    node=node->right;
+                }
+            }
+        }
+        return ans;
 }
