@@ -50,41 +50,24 @@ public:
 
 /* The below method sorts the stack s 
 you are required to complete the below method */
-void solve(int i,stack<int> &st){
-    vector<int> v;
-    int j=i;
-    while(!st.empty() && j--){
-        v.insert(v.begin(),st.top());
-        st.pop();
-    }
-    if(st.empty()) {
-        for(int i=0;i<v.size();i++)
-        st.push(v[i]);
-        return;}
-
-    int val=st.top();
-    st.pop();
-    j=0;
-    for(;j<v.size();j++){
-        if(v[j]>val)
-        break;
-    }
-    if(j==v.size()) v.push_back(val);
-    else{
-        v.push_back(0);
-        int k=v.size()-1;
-        while(k-1>=0 && k!=j){
-            v[k]=v[k-1];
-            k--;
+void insert(stack<int> &st,int x){
+        if(st.empty() || st.top()<=x){
+            st.push(x);
+            return ;
         }
-        v[j]=val;
+        int val=st.top();
+        st.pop();
+        insert(st,x);
+        st.push(val);
     }
-    
-    for(int i=0;i<v.size();i++)
-    st.push(v[i]);
-    solve(i+1,st);
+void solve(stack<int> &st){
+    if(st.empty()) return ;
+        int val=st.top();
+        st.pop();
+        solve(st);
+        insert(st,val);
 }
 void SortedStack :: sort()
 {
-   solve(1,s);
+   solve(s);
 }
