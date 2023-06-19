@@ -10,45 +10,54 @@ class Solution {
 public:
     vector<vector<string>> findSequences(string start, string tar, vector<string>& wl) {
         vector<vector<string>> ans;
-        unordered_set<string> st(wl.begin(),wl.end());
-        vector<string> curlevel;
-        curlevel.push_back(start);
-        int level=0,ter=INT_MAX;
+        set<string> st,curlevel;
+        st.insert(start);
+        curlevel.insert(start);
+        for(int i=0;i<wl.size();i++){
+            st.insert(wl[i]);
+        }
         queue<vector<string>> q;
+        vector<string> v;
+        v.push_back(start);
         q.push({start});
-        
+        st.erase(start);
         while(!q.empty()){
-            vector<string> v=q.front();
-            string s=v.back();
-            q.pop();
-            if(v.size()>level){
-                level++;
+            if(curlevel.size()>0){
                 for(auto it:curlevel){
                     st.erase(it);
                 }
             }
-          
+            curlevel.clear();
+            int size=q.size();
+            bool flag=false;
+            while(size--){
+                vector<string> v=q.front();
+                string s=v.back();
+            q.pop();
             if(s==tar) {
-                if(ans.size()==0)
                 ans.push_back(v);
-                else if(ans[0].size()==v.size())
-                    ans.push_back(v);
+                flag=true;
             }
-            string s2=s;
+            else{
+                string s2=s;
             for(int i=0;i<s.size();i++){
-                char original=s[i];
+                
                 for(char ch='a';ch<='z';ch++){
-                        s[i]=ch;
-                        if(st.count(s)>0){
-                            v.push_back(s);
-                            curlevel.push_back(s);
+                    if(ch!=s[i]){
+                        s2[i]=ch;
+                        if(st.find(s2)!=st.end()){
+                            v.push_back(s2);
+                            curlevel.insert(s2);
                             q.push(v);
                             v.pop_back();
                         }
+                    }
                 }
-                s[i]=original;
+                s2=s;
               }
-            
+             }
+            }
+            if(flag) return ans;
         }
         return ans;
     }
