@@ -20,14 +20,10 @@ public:
         
         for(int i=0;i<m;i++){
                 if(mat[0][i]=='O' && !vis[0][i]) dfs(0,i,n,m,mat,vis);
-        }
-        for(int i=0;i<m;i++){
                 if(mat[n-1][i]=='O' && !vis[n-1][i]) dfs(n-1,i,n,m,mat,vis);
         }
         for(int i=0;i<n;i++){
-                if(mat[i][0]=='O' && !vis[i][0]) dfs(i,0,n,m,mat,vis);
-        }
-        for(int i=0;i<n;i++){
+            if(mat[i][0]=='O' && !vis[i][0]) dfs(i,0,n,m,mat,vis);
                 if(mat[i][m-1]=='O' && !vis[i][m-1]) dfs(i,m-1,n,m,mat,vis);
         }
         for(int i=0;i<n;i++){
