@@ -10,7 +10,7 @@ class Solution {
   public:
     vector<int> shortestPath(vector<vector<int>>& edges, int n,int m, int src){
         // code here
-        vector<int> ans(n,-1),vis(n,0);
+        vector<int> ans(n,-1),dist(n,1e9);
         vector<int> adj[n];
         for(int i=0;i<m;i++){
             int x=edges[i][0],y=edges[i][1];
@@ -18,21 +18,22 @@ class Solution {
             adj[y].push_back(x);
         }
         
-        queue<pair<int,int>> q;
-        q.push({src,0});
-        vis[src]=1;
+        queue<int> q;
+        q.push(src);
+        dist[src]=0;
         while(!q.empty()){
-            int node=q.front().first;
-            int level=q.front().second;
+            int node=q.front();
             q.pop();
             
-            ans[node]=level;
             for(auto it:adj[node]){
-                if(!vis[it]){
-                    vis[it]=1;
-                    q.push({it,level+1});
+                if(dist[node]+1<dist[it]){
+                    dist[it]=1+dist[node];
+                    q.push(it);
                 }
             }
+        }
+        for(int i=0;i<n;i++){
+            if(dist[i]!=1e9) ans[i]=dist[i];
         }
         return ans;
     }
