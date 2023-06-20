@@ -11,7 +11,7 @@ class Solution
 	
 	vector<int> topoSort(int n, vector<int> adj[]) 
 	{
-	    vector<int> vis(n,0),ans,indegree(n,0);
+	    vector<int> ans,indegree(n,0);
 	    for(int i=0;i<n;i++){
 	        for(auto it:adj[i]){
 	            indegree[it]++;
@@ -22,7 +22,7 @@ class Solution
 	        if(indegree[i]==0)
 	        {
 	            q.push(i);
-	            vis[i]=1;
+	            
 	        }
 	    }
 	    
@@ -32,13 +32,13 @@ class Solution
 	        ans.push_back(node);
 	        
 	        for(auto it:adj[node]){
-	            if(!vis[it]){
+	           
 	                indegree[it]--;
 	                if(indegree[it]==0){
-	                    vis[it]=1;
+	                    
 	                    q.push(it);
 	                }
-	            }
+	            
 	        }
 	    }
 	    return ans;
