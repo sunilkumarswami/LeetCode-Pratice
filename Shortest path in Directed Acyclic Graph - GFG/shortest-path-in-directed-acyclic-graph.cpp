@@ -8,26 +8,33 @@ using namespace std;
 // User function Template for C++
 class Solution {
   public:
+     void dfs(int node,vector<int> &vis,vector<pair<int,int>> adj[],stack<int> &topo){
+         vis[node]=1;
+         for(auto it:adj[node]){
+             if(!vis[it.first]) dfs(it.first,vis,adj,topo);
+         }
+         topo.push(node);
+     }
      vector<int> shortestPath(int n,int m, vector<vector<int>>& edges){
-        vector<int> ans(n,-1),dist(n,1e9);
+        vector<int> ans(n,-1),dist(n,1e9),vis(n,0);
+        stack<int> topo;
         vector<pair<int,int>> adj[n];
         for(int i=0;i<m;i++){
             int u=edges[i][0],v=edges[i][1],w=edges[i][2];
             adj[u].push_back({v,w});
         }
-        
-        queue<int> q;
-        q.push(0);
+        for(int i=0;i<n;i++){
+            if(!vis[i]) dfs(i,vis,adj,topo);
+        }
         dist[0]=0;
-        while(!q.empty()){
-            int node=q.front();
-            q.pop();
+        while(!topo.empty()){
+            int node=topo.top();
+            topo.pop();
             
             for(auto it:adj[node]){
                 int v=it.first,w=it.second;
                 if(dist[node]+w<dist[v]){
                     dist[v]=w+dist[node];
-                    q.push(v);
                 }
             }
         }
