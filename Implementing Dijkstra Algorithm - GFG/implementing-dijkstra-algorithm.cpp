@@ -11,19 +11,19 @@ class Solution
     vector <int> dijkstra(int n, vector<vector<int>> adj[], int S)
     {
         vector<int> dist(n,1e9);
-        set<pair<int,int>> st;
-        st.insert({0,S});
+        queue<int> q;
+        q.push(S);
         dist[S]=0;
         
-        while(!st.empty()){
-            int distance=st.begin()->first,node=st.begin()->second;
-            st.erase(st.begin());
+        while(!q.empty()){
+            int node=q.front();
+            q.pop();
             
             for(auto it:adj[node]){
                 int v=it[0],w=it[1];
-                if(distance+w<dist[v]){
-                    dist[v]=distance+w;
-                    st.insert({dist[v],v});
+                if(dist[node]+w<dist[v]){
+                    dist[v]=dist[node]+w;
+                    q.push(v);
                 }
             }
         }
