@@ -9,14 +9,14 @@ class Solution {
         int n=heights.size(),m=heights[0].size();
         vector<vector<int>> diff(n,vector<int> (m,1e9));
         diff[0][0]=0;
-        queue<pair<int,pair<int,int>>> q;
+        priority_queue<pair<int,pair<int,int>>,vector<pair<int,pair<int,int>>>, greater<pair<int,pair<int,int>>>> q;
         q.push({0,{0,0}});
         
         int dx[]={0,0,1,-1};
         int dy[]={1,-1,0,0};
         
         while(!q.empty()){
-            int maxi=q.front().first,x=q.front().second.first, y=q.front().second.second;
+            int maxi=q.top().first,x=q.top().second.first, y=q.top().second.second;
             q.pop();
             for(int i=0;i<4;i++){
                 int nx=x+dx[i],ny=y+dy[i];
