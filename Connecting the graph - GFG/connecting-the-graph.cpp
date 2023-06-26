@@ -6,8 +6,9 @@ using namespace std;
 // } Driver Code Ends
 // User function Template for C++
 class DisjointSet{
-    vector<int> rank,par;
+    
     public:
+    vector<int> rank,par;
     DisjointSet(int n){
         rank.resize(n+1,0);
         par.resize(n+1);
@@ -48,12 +49,10 @@ class Solution {
             }
             else extraEdges++;
         }
-        set<int> st;
+        int connectedComponents=-1;
         for(int i=0;i<n;i++){
-            int par=ds.findPar(i);
-            st.insert(par);
+            if(ds.par[i]==i) connectedComponents++;
         }
-        int connectedComponents=st.size()-1;
         if(connectedComponents<=extraEdges) return connectedComponents;
         return -1;
     }
