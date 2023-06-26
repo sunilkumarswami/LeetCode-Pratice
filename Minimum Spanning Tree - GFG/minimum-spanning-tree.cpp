@@ -4,11 +4,7 @@ using namespace std;
 
 // } Driver Code Ends
 
-class Solution
-{
-	public:
-	//Function to find sum of weights of edges of the Minimum Spanning Tree.
-	class DisjointSet{
+class DisjointSet{
     vector<int> rank,par,size;
     public:
     DisjointSet(int n){
@@ -50,6 +46,12 @@ class Solution
         return par[u]=findPar(par[u]);
     }
 };
+
+class Solution
+{
+	public:
+
+	
     int spanningTree(int n, vector<vector<int>> adj[])
     {
         int sum=0;
