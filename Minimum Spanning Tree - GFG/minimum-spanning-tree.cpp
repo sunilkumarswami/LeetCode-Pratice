@@ -65,7 +65,7 @@ class Solution
         for(auto it:edges){
             int w=it[0],u=it[1],v=it[2];
             if(ds.findPar(u)!=ds.findPar(v)){
-                ds.unionByRank(u,v);
+                ds.unionBySize(u,v);
                 sum+=w;
             }
         }
