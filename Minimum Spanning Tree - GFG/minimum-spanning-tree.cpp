@@ -3,48 +3,76 @@
 using namespace std;
 
 // } Driver Code Ends
+
 class Solution
 {
 	public:
 	//Function to find sum of weights of edges of the Minimum Spanning Tree.
+	class DisjointSet{
+    vector<int> rank,par,size;
+    public:
+    DisjointSet(int n){
+        rank.resize(n+1,0);
+        par.resize(n+1);
+        size.resize(n+1,1);
+        for(int i=0;i<n;i++){
+            rank[i]=0;
+            par[i]=i;
+        }
+    }
+    void unionByRank(int u,int v){
+        u=findPar(u),v=findPar(v);
+        if(u==v) return;
+        if(rank[u]==rank[v]){
+            par[v]=u;
+            rank[u]++;
+        }
+        else if(rank[u]>rank[v]){
+            par[v]=u;
+        }
+        else par[u]=v;
+    }
+    
+    void unionBySize(int u,int v){
+        u=findPar(u),v=findPar(v);
+        if(u==v) return;
+        
+        if(size[u]<size[v]){
+            par[u]=v;
+            size[v]+=size[u];
+        }else{
+            par[v]=u;
+            size[u]+=size[v];
+        }
+    }
+    int findPar(int u){
+        if(par[u]==u) return u;
+        return par[u]=findPar(par[u]);
+    }
+};
     int spanningTree(int n, vector<vector<int>> adj[])
     {
         int sum=0;
-        // vector<pair<int,int>> adj[n];
-        // for(auto it:edges){
-        //     adj[it[0]].push_back({it[1],it[2]});
-        //     adj[it[1]].push_back({it[0],it[2]});
-        // }
-        // for(int i=0;i<edges.size();i++){
-        //     adj[edges[i][0]].push_back({edges[i][1],edges[i][2]});
-        //     adj[edges[i][1]].push_back({edges[i][0],edges[i][2]});
-        // }
-        vector<int> vis(n,0);
+        DisjointSet ds(n);
+        vector<vector<int>> edges;
+        for(int i=0;i<n;i++){
+            for(auto it:adj[i]){
+                edges.push_back({it[1],i,it[0]});
+            }
+        }
+        sort(edges.begin(),edges.end());
         
-        priority_queue<pair<int,pair<int,int>>,vector<pair<int,pair<int,int>>>, greater<pair<int,pair<int,int>>>> pq;
-        
-        pq.push({0,{0,-1}});
-        
-        while(!pq.empty()){
-            auto it=pq.top();
-            pq.pop();
-            int wt=it.first,node=it.second.first,par=it.second.second;
-            
-            if(!vis[node]){
-                vis[node]=1;
-                sum+=wt;
-                
-                for(auto it:adj[node]){
-                    int v=it[0],w=it[1];
-                    if(!vis[v]){
-                        pq.push({w,{v,node}});
-                    }
-                }
+        for(auto it:edges){
+            int w=it[0],u=it[1],v=it[2];
+            if(ds.findPar(u)!=ds.findPar(v)){
+                ds.unionByRank(u,v);
+                sum+=w;
             }
         }
         return sum;
     }
 };
+
 
 //{ Driver Code Starts.
 
