@@ -5,21 +5,21 @@ using namespace std;
 // } Driver Code Ends
 class Solution{
 	public:
-	    void solve(int i,string s,string str,vector<string> &ans,int n){
-	        if(i==n){
-	            if(s.size()>0)
-	            ans.push_back(s);
-	            return;
-	        }
-	        solve(i+1,s,str,ans,n);
-	        s+=str[i];
-	        solve(i+1,s,str,ans,n);
-	    }
+	    
 		vector<string> AllPossibleStrings(string str){
 		    string s="";
 		    int n=str.size();
 		    vector<string> ans;
-		    solve(0,s,str,ans,n);
+		    for(int num=0;num<pow(2,n);num++){
+		        string s="";
+		        for(int i=0;i<n;i++){
+		            if(1<<i& num){
+		                s+=str[i];
+		            }
+		        }
+		        if(s.size()>0)
+		        ans.push_back(s);
+		    }
 		    sort(ans.begin(),ans.end());
 		    return ans;
 		}
