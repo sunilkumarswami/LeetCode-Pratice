@@ -16,8 +16,7 @@ public:
         }
     }
     vector<vector<int>> combinationSum3(int k, int n) {
-        vector<int> a(9,0);
-        for(int i=0;i<9;i++) a[i]=i+1;
+    
         vector<vector<int>> ans;
         vector<int> ds;
         solve(0,n,k,ds,ans);
