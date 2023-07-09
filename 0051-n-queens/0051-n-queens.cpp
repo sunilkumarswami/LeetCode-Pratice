@@ -2,17 +2,23 @@ class Solution {
 public:
     bool isSafe(int x,int y,vector<string> &a){
         int n=a.size();
-        int dx[]={0,0,1,-1,1,1,-1,-1};
-        int dy[]={1,-1,0,0,1,-1,1,-1};
-        for(int k=0;k<8;k++){
-            int i=x+dx[k],j=y+dy[k];
-            while(i>=0 && j>=0 && i<n && j<n){
-                if(a[i][j]=='Q') return false;
-                i=i+dx[k];
-                j=j+dy[k];
-            }
+        int i=x,j=y;
+        while(i>=0){
+            if(a[i][j]=='Q') return false;
+            i--;
         }
-        
+        i=x,j=y;
+        while(i>=0 && j>=0){
+            if(a[i][j]=='Q') return false;
+            i--;
+            j--;
+        }
+        i=x,j=y;
+        while(i>=0 && j<n){
+            if(a[i][j]=='Q') return false;
+            i--;
+            j++;
+        }
         return true;
     }
     void solve(int i,vector<string> &a, vector<vector<string>> &ans){
