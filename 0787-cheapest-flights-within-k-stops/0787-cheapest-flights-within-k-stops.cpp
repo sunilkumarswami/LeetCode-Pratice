@@ -1,31 +1,43 @@
 class Solution {
 public:
-    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
+    int findCheapestPrice(int n, vector<vector<int>>& flights, int S, int dst, int k) {
         vector<pair<int,int>> adj[n];
-        vector<int> dist(n,1e9);
         for(int i=0;i<flights.size();i++){
-            int u=flights[i][0],v=flights[i][1],w=flights[i][2];
-            adj[u].push_back({v,w});
+            int u=flights[i][0],v=flights[i][1],wt=flights[i][2];
+            adj[u].push_back({v,wt});
         }
+        vector<int> dist(n,INT_MAX),par(n);
+        //priority_queue<pair<int,int>,vector<pair<int,int>>, greater<pair<int,int>>> pq;
+        queue<pair<int,int>> pq;
+        for(int i=0;i<n;i++) par[i]=i;
         
-        queue<pair<int,pair<int,int>>> pq;
-        dist[src]=0;
-        pq.push({0,{src,0}});
+        dist[S]=0;
+        par[S]=S;
+        pq.push({0,S});
         
+        int cnt=k+1;
         while(!pq.empty()){
-            auto it=pq.front();
-            pq.pop();
-            int node=it.second.first,cnt=it.first,money=it.second.second;
-            if(cnt>k) continue;
-            for(auto it:adj[node]){
-                int v=it.first,w=it.second;
-                if(cnt<=k && (money+w<dist[v])){
-                    dist[v]=money+w;
-                    pq.push({cnt+1,{v,dist[v]}});
+            int size=pq.size();
+            if(cnt==0) break;
+            cnt--;
+            while(size--){
+                
+                int dis=pq.front().first;
+                int u=pq.front().second;
+                pq.pop();
+            //if(dist[u]<dis) continue;
+                for(auto it:adj[u]){
+                int v=it.first,wt=it.second;
+                if(dis+wt<dist[v]){
+                    dist[v]=dis+wt;
+                    par[v]=u;
+                    pq.push({dist[v],v});
                 }
             }
+            }
+            
         }
-        if(dist[dst]==1e9) return -1;
+        if(dist[dst]==INT_MAX) return -1;
         return dist[dst];
     }
 };
